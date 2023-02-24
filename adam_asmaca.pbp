@@ -1,0 +1,109 @@
+include "lcd_tanimlamalari.pbp"
+include "terminaltanimlamalari.pbp"
+
+h1 var byte 
+h2 var byte 
+h3 var byte 
+h4 var byte 
+h5 var byte 
+o2 var byte 
+tahmin var byte
+tahmin=0
+bildimi var byte
+i var byte 
+i=5
+
+
+
+
+label: 
+lcdout $fe,1
+hserout["Birinci oyuncu 5 harfli bir kelime girsin",13,10]
+hserin[h1]
+hserout["*"]
+hserin[h2]
+hserout["*"]
+hserin[h3]
+hserout["*"]
+hserin[h4]
+hserout["*"]
+hserin[h5]
+hserout["*",13,10]
+hserout["Kelime girildi ikinci oyuncu tahminini girsin",13,10] 
+hserout["5 tahmin hakkiniz var",13,10] 
+
+win:
+if tahmin = 5 then 
+lcdout $fe,$c0, "Tebrikler" 
+i=5
+goto label
+endif
+
+hserin[o2] 
+
+if o2= h1 then 
+lcdout $fe,128,h1
+tahmin = tahmin + 1
+bildimi=1
+endif 
+
+
+if o2=h2 then 
+lcdout $fe,129,h2
+tahmin = tahmin + 1
+bildimi=1
+endif
+
+
+if o2=h3 then 
+lcdout $fe,130,h3
+tahmin = tahmin + 1
+bildimi=1
+endif
+
+
+if o2=h4 then 
+lcdout $fe,131,h4 
+tahmin = tahmin + 1     
+bildimi=1
+endif 
+
+
+if o2=h5 then 
+lcdout $fe,132,h5
+tahmin = tahmin +1
+bildimi=1 
+endif 
+
+if bildimi=1 then
+    bildimi =0
+    goto win
+endif
+
+i = i-1 
+hserout [#i," hakkiniz kaldi",13,10]
+
+if i>0 then
+    goto win 
+endif
+
+LCDOUT $fe,$c0,"ZIRLA"
+i=5
+
+goto label
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
